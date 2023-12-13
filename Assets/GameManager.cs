@@ -17,7 +17,8 @@ public class GameManager : MonoBehaviour
     public GameObject GameOverScreen;
     public TextMeshProUGUI timeRemaining;
     public TextMeshProUGUI itemsCollected;
-
+    public TextMeshProUGUI itemsRemaining;
+    public GameObject[] totalItemCount;
 
     void Start()
     {
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
 
         gameOver = false;
         GameOverScreen.SetActive(false);
-
+        totalItemCount = GameObject.FindGameObjectsWithTag("collectible");
     }
 
     // Update is called once per frame
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour
             Debug.Log(totalTime);
             timeRemaining.text = Mathf.Round(totalTime).ToString();
             itemsCollected.text = Counters.collectibles.Length.ToString();
+            itemsRemaining.text = totalItemCount.Length.ToString();
             GameOverScreen.SetActive(true);
             Time.timeScale = 0;
         }
