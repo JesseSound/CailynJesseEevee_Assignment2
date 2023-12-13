@@ -10,9 +10,12 @@ public class Collections : MonoBehaviour
     public TextMeshProUGUI collectText;
     public GameObject[] keys;
 
+    public GameManager endTimes;
+
     // Start is called before the first frame update
     void Start()
     {
+        endTimes = endTimes.GetComponent<GameManager>();
         collectibles = new GameObject[0];
         collectText.text = collectibles.Length.ToString();
         keys = new GameObject[0];
@@ -42,6 +45,9 @@ public class Collections : MonoBehaviour
 
             // Destroy the in-game copy of the key
             Destroy(collision.gameObject);
+        }else if (collision.CompareTag("Exit"))
+        {
+            endTimes.gameOver = true;
         }
     }
 
