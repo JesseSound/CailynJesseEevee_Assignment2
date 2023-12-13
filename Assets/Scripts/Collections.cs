@@ -5,15 +5,17 @@ using TMPro;
 
 public class Collections : MonoBehaviour
 {
-    GameObject[] collectibles;
+    public GameObject[] collectibles;
 
     public TextMeshProUGUI collectText;
+    public GameObject[] keys;
 
     // Start is called before the first frame update
     void Start()
     {
         collectibles = new GameObject[0];
         collectText.text = collectibles.Length.ToString();
+        keys = new GameObject[0];
     }
 
     // Update is called once per frame
@@ -34,6 +36,12 @@ public class Collections : MonoBehaviour
 
             // Update counter
             collectText.text = collectibles.Length.ToString();
+        }else if (collision.CompareTag("key"))
+        {
+            AddToKeys(collision.gameObject);
+
+            // Destroy the in-game copy of the key
+            Destroy(collision.gameObject);
         }
     }
 
@@ -54,5 +62,21 @@ public class Collections : MonoBehaviour
         // Update the collectibles array
         collectibles = newCollectibles;
     }
+    private void AddToKeys(GameObject key)
+    {
+        // Create a new array with increased size
+        GameObject[] newKeys = new GameObject[keys.Length + 1];
 
+        // Copy existing keys to the new array
+        for (int i = 0; i < keys.Length; i++)
+        {
+            newKeys[i] = keys[i];
+        }
+
+        // Add the new key to the array
+        newKeys[newKeys.Length - 1] = key;
+
+        // Update the keys array
+        keys = newKeys;
+    }
 }
