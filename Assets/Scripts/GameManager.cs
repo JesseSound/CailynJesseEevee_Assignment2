@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     
 
     public TextMeshProUGUI timerDisplay;
-    public float totalTime= 120.0f; // total time expected to finish the maze thing
+    public float totalTime= 60.0f; // total time expected to finish the maze thing
     public Collections Counters; // call the collections script so we can track keys and other things maybe
     //track the game doors so we can remove them later
     public GameObject door1;
@@ -34,12 +34,19 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
+
+
         if (!gameOver) // Check if the game is not over
         {
             //ez pz timer
             totalTime -= Time.deltaTime;
             timerDisplay.text = Mathf.Round(totalTime).ToString();
-
+            if(totalTime <= 0)
+            {
+                gameOver = true;
+            }
             if (Counters.keys.Length == 2)
             {
                 Debug.Log("KEYS GATHERED");
@@ -55,6 +62,7 @@ public class GameManager : MonoBehaviour
             Debug.Log(totalTime);
             timeRemaining.text = Mathf.Round(totalTime).ToString();
             itemsCollected.text = Counters.collectibles.Length.ToString();
+
             itemsRemaining.text = totalItemCount.Length.ToString();
             GameOverScreen.SetActive(true);
             Time.timeScale = 0;
